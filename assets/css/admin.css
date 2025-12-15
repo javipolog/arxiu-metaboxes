@@ -1,0 +1,975 @@
+/**
+ * Arxiu Monòver - Admin Styles
+ * 
+ * @package Arxiu_Monovar
+ * @since 13.0.0
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VARIABLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+    --arxiu-primary: #2271b1;
+    --arxiu-primary-dark: #135e96;
+    --arxiu-success: #00a32a;
+    --arxiu-warning: #dba617;
+    --arxiu-danger: #d63638;
+    --arxiu-info: #72aee6;
+    --arxiu-gray-100: #f8f9fa;
+    --arxiu-gray-200: #f0f0f1;
+    --arxiu-gray-300: #dcdcde;
+    --arxiu-gray-400: #c3c4c7;
+    --arxiu-gray-500: #8c8f94;
+    --arxiu-gray-600: #646970;
+    --arxiu-gray-700: #3c434a;
+    --arxiu-gray-800: #2c3338;
+    --arxiu-gray-900: #1d2327;
+    --arxiu-radius: 6px;
+    --arxiu-radius-sm: 4px;
+    --arxiu-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    --arxiu-shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Wrappers */
+.arxiu-imagen-wrapper,
+.arxiu-generes-wrapper,
+.arxiu-data-wrapper,
+.arxiu-ubicacio-wrapper,
+.arxiu-autor-colleccio-wrapper {
+    font-size: 13px;
+}
+
+/* Sections */
+.arxiu-section {
+    background: var(--arxiu-gray-100);
+    border: 1px solid var(--arxiu-gray-300);
+    border-radius: var(--arxiu-radius);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.arxiu-section:last-child {
+    margin-bottom: 0;
+}
+
+.arxiu-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.arxiu-section-header h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--arxiu-gray-900);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.arxiu-section-header h4 .dashicons {
+    color: var(--arxiu-primary);
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.arxiu-help-text {
+    color: #6c757d;
+    background: #f8f9fa;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin: 12px 0;
+    border-left: 3px solid var(--arxiu-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   IMAGE SECTION - Premium Styles (definits més avall)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.arxiu-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: var(--arxiu-gray-600);
+}
+
+.arxiu-image-placeholder .dashicons {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.arxiu-image-container {
+    background: #f0f0f1;
+    border: 2px dashed #c3c4c7;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;  /* COM L'ANTIC - NO FLEXBOX! */
+    min-height: 350px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.arxiu-image-container:hover {
+    border-color: #adb5bd;
+}
+
+/* Quan té imatge, disseny fosc elegant */
+.arxiu-image-container.has-image {
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+    border: none;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+    padding: 25px;
+}
+
+/* EXACTAMENT com el plugin antic */
+.arxiu-image-preview {
+    display: inline-block;
+    position: relative;
+    line-height: 0;
+}
+
+.arxiu-image-preview img {
+    max-width: 100%;
+    max-height: 60vh;
+    display: block;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+/* Efecte durant detecció */
+.arxiu-image-preview.detecting img {
+    filter: brightness(0.7);
+}
+
+/* EXACTAMENT com el plugin antic */
+.arxiu-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    z-index: 10;
+}
+
+.arxiu-image-overlay.detecting {
+    background: rgba(0,0,0,0.3);
+}
+
+.arxiu-image-overlay.detecting::after {
+    content: '🔍 Analitzant persones...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(52, 152, 219, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(52, 152, 219, 0.8); }
+}
+
+.arxiu-image-overlay .arxiu-pin,
+.arxiu-image-overlay .arxiu-suggestion {
+    pointer-events: auto;
+}
+
+.arxiu-image-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PERSON DETECTION - Premium
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.arxiu-section-detection {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.arxiu-model-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--arxiu-gray-600);
+    background: #f8f9fa;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.arxiu-model-status .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--arxiu-gray-400);
+    transition: all 0.3s ease;
+}
+
+.arxiu-model-status.loading {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.arxiu-model-status.loading .status-dot {
+    background: #ffc107;
+    animation: pulse-dot 1s infinite;
+}
+
+.arxiu-model-status.ready {
+    background: #d4edda;
+    color: #155724;
+}
+
+.arxiu-model-status.ready .status-dot {
+    background: #28a745;
+}
+
+.arxiu-model-status.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.arxiu-model-status.error .status-dot {
+    background: #dc3545;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+.arxiu-detection-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.arxiu-detection-toolbar .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.arxiu-detection-toolbar .button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.arxiu-detection-toolbar .button.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.arxiu-detection-toolbar .button.loading .dashicons {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.arxiu-detection-count {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--arxiu-primary);
+    background: rgba(0, 115, 170, 0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+/* Tags / Pins - Premium Style */
+.arxiu-pin {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px; /* Centrar horitzontalment */
+    margin-top: -12px;  /* Centrar verticalment */
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    border: 3px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.5), 0 0 0 2px rgba(231, 76, 60, 0.3);
+    z-index: 10;
+    pointer-events: auto;
+    transition: all 0.2s ease;
+    animation: pin-appear 0.3s ease-out;
+    box-sizing: border-box;
+}
+
+@keyframes pin-appear {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.arxiu-pin:hover {
+    transform: scale(1.2);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6), 0 0 0 4px rgba(231, 76, 60, 0.2);
+}
+
+.arxiu-pin::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 50%;
+}
+
+.arxiu-pin-label {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-bottom: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.arxiu-pin:hover .arxiu-pin-label {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-3px);
+}
+
+/* Diàleg de nom per etiquetar persona */
+.arxiu-name-dialog {
+    position: fixed;
+    z-index: 100001;
+    animation: dialog-appear 0.2s ease-out;
+}
+
+@keyframes dialog-appear {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.arxiu-name-dialog-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.05);
+    min-width: 280px;
+}
+
+.arxiu-name-dialog-content label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #1d2327;
+    font-size: 14px;
+}
+
+.arxiu-name-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.arxiu-name-input:focus {
+    outline: none;
+    border-color: #0073aa;
+    box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.15);
+}
+
+.arxiu-name-input.error {
+    border-color: #dc3545;
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.arxiu-name-dialog-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.arxiu-name-dialog-buttons .button {
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.arxiu-name-dialog-buttons .button-primary {
+    background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 115, 170, 0.3);
+}
+
+.arxiu-name-dialog-buttons .button-primary:hover {
+    background: linear-gradient(135deg, #005a87 0%, #004567 100%);
+}
+
+/* AI Suggestions - Estil Premium (posicionament correcte) */
+.arxiu-suggestion {
+    position: absolute;
+    border: 2px solid rgba(52, 152, 219, 0.9);
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0.2) 100%);
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.3) inset, 0 4px 15px rgba(52, 152, 219, 0.3);
+    animation: suggestion-appear 0.4s ease-out;
+}
+
+@keyframes suggestion-appear {
+    from { 
+        opacity: 0; 
+        transform: scale(0.9); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+.arxiu-suggestion:hover {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.25) 0%, rgba(52, 152, 219, 0.35) 100%);
+    border-color: #2980b9;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 25px rgba(52, 152, 219, 0.5);
+    transform: scale(1.02);
+}
+
+.arxiu-suggestion::after {
+    content: '👤';
+    font-size: 20px;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.5);
+    transition: all 0.3s ease;
+}
+
+.arxiu-suggestion:hover::after {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+}
+
+.arxiu-suggestion.pulse::after {
+    animation: pulse-animation 1.5s infinite;
+}
+
+@keyframes pulse-animation {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* Tags list */
+.arxiu-tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.arxiu-tags-list .arxiu-tag-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #fff;
+    border: 1px solid var(--arxiu-gray-400);
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.arxiu-tags-list .arxiu-tag-remove {
+    cursor: pointer;
+    color: var(--arxiu-danger);
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANALYSIS SECTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.arxiu-warning-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: #fff3cd;
+    color: #664d03;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.arxiu-analysis-toolbar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.arxiu-analysis-results {
+    background: #fff;
+    border: 1px solid var(--arxiu-gray-300);
+    border-radius: var(--arxiu-radius);
+    padding: 16px;
+}
+
+.arxiu-result-group {
+    margin-bottom: 16px;
+}
+
+.arxiu-result-group:last-child {
+    margin-bottom: 0;
+}
+
+.arxiu-result-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--arxiu-gray-600);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.arxiu-result-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.arxiu-result-inline label {
+    margin-bottom: 0;
+}
+
+/* Visual tags */
+.arxiu-visual-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 32px;
+    padding: 8px;
+    background: var(--arxiu-gray-100);
+    border: 1px solid var(--arxiu-gray-300);
+    border-radius: var(--arxiu-radius-sm);
+}
+
+.arxiu-visual-tags .arxiu-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #e1ecf4;
+    color: #0a5a8a;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.arxiu-description-text {
+    padding: 10px;
+    background: var(--arxiu-gray-100);
+    border: 1px solid var(--arxiu-gray-300);
+    border-radius: var(--arxiu-radius-sm);
+    min-height: 60px;
+    line-height: 1.5;
+}
+
+.arxiu-description-text:focus,
+.arxiu-visual-tags:focus {
+    outline: none;
+    border-color: var(--arxiu-primary);
+    box-shadow: 0 0 0 1px var(--arxiu-primary);
+}
+
+/* Confidence badges */
+.arxiu-confidence-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.arxiu-confidence-high {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.arxiu-confidence-medium {
+    background: #fff3cd;
+    color: #664d03;
+}
+
+.arxiu-confidence-low {
+    background: #f8d7da;
+    color: #842029;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOADING OVERLAY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.arxiu-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+}
+
+.arxiu-loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.arxiu-spin {
+    animation: arxiu-spin 1s linear infinite;
+}
+
+@keyframes arxiu-spin {
+    to { transform: rotate(360deg); }
+}
+
+.arxiu-loading-text {
+    font-size: 14px;
+    color: var(--arxiu-gray-700);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   POPOVER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.arxiu-popover {
+    position: fixed;
+    background: #fff;
+    border: 1px solid var(--arxiu-gray-300);
+    border-radius: var(--arxiu-radius);
+    box-shadow: var(--arxiu-shadow-lg);
+    padding: 12px;
+    z-index: 100001;
+    min-width: 200px;
+}
+
+.arxiu-popover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.arxiu-popover-header h5 {
+    margin: 0;
+    font-size: 13px;
+}
+
+.arxiu-popover-close {
+    cursor: pointer;
+    color: var(--arxiu-gray-500);
+}
+
+.arxiu-popover-body {
+    margin-bottom: 10px;
+}
+
+.arxiu-popover-body input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--arxiu-gray-400);
+    border-radius: var(--arxiu-radius-sm);
+}
+
+.arxiu-popover-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NOTIFICATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.arxiu-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background: #fff;
+    border-radius: var(--arxiu-radius);
+    box-shadow: var(--arxiu-shadow-lg);
+    border-left: 4px solid var(--arxiu-info);
+    z-index: 100002;
+    animation: slideIn 0.3s ease;
+}
+
+.arxiu-notification.success {
+    border-left-color: var(--arxiu-success);
+}
+
+.arxiu-notification.error {
+    border-left-color: var(--arxiu-danger);
+}
+
+.arxiu-notification.warning {
+    border-left-color: var(--arxiu-warning);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.arxiu-help-text {
+    font-size: 12px;
+    color: var(--arxiu-gray-600);
+    margin: 0;
+}
+
+.arxiu-warning-box {
+    background: #fff3cd;
+    border-left: 4px solid #ffcc00;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    border-radius: 0 var(--arxiu-radius-sm) var(--arxiu-radius-sm) 0;
+    font-size: 13px;
+}
+
+.arxiu-warning-box a {
+    color: #664d03;
+    font-weight: 600;
+}
+
+/* Buttons */
+.button .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 4px;
+    margin-top: -2px;
+}
+
+.button-hero .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SUGGERÈNCIES D'UBICACIÓ (IA)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.arxiu-ubicacio-suggestion {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+    border: 1px solid #c3daf5;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+.arxiu-ubicacio-reason,
+.arxiu-ubicacio-elements {
+    margin-top: 6px;
+    color: #5a6a7a;
+    line-height: 1.4;
+}
+
+.arxiu-ubicacio-elements {
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px dashed #d0dce8;
+}
+
+.arxiu-ubicacio-actions {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #d0dce8;
+}
+
+.arxiu-ubicacio-actions .button {
+    margin-right: 8px;
+}
+
+.arxiu-ubicacio-alternatives {
+    margin-top: 12px;
+    padding: 10px;
+    background: #fafafa;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.arxiu-ubicacio-alternatives ul {
+    margin: 8px 0 0 0;
+    padding-left: 20px;
+}
+
+.arxiu-ubicacio-alternatives li {
+    margin-bottom: 6px;
+    line-height: 1.6;
+}
+
+.arxiu-ubicacio-alternatives .button {
+    padding: 0 8px;
+    height: 24px;
+    line-height: 22px;
+    font-size: 11px;
+}
+
+/* Animació per feedback visual */
+.arxiu-apply-ubicacio-btn.button-disabled {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Millora visual de les badges de confiança */
+.arxiu-confidence-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.arxiu-confidence-high {
+    background: #d4edda;
+    color: #155724;
+}
+
+.arxiu-confidence-medium {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.arxiu-confidence-low {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   QUOTA INDICATOR (v17.0)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.arxiu-quota-bar {
+    background: var(--arxiu-gray-200);
+    border: 1px solid var(--arxiu-gray-300);
+    border-radius: var(--arxiu-radius);
+    padding: 8px 12px;
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.arxiu-quota-label {
+    position: relative;
+    z-index: 2;
+    font-size: 12px;
+    color: var(--arxiu-gray-700);
+}
+
+.arxiu-quota-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: width 0.3s ease;
+    z-index: 1;
+}
+
+.arxiu-quota-progress.green {
+    background: rgba(0, 163, 42, 0.2);
+}
+
+.arxiu-quota-progress.yellow {
+    background: rgba(219, 166, 23, 0.3);
+}
+
+.arxiu-quota-progress.red {
+    background: rgba(214, 54, 56, 0.3);
+}
+
+/* Badge versió */
+.arxiu-version-badge {
+    display: inline-block;
+    background: var(--arxiu-primary);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 5px;
+}
